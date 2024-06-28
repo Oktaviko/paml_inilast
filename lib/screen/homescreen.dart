@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          centerTitle: true,
           title: Text('Beranda'),
           backgroundColor: Colors.transparent,
           elevation: 0,

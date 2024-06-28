@@ -3,7 +3,7 @@ import 'package:paml_inilast/screen/auth/loginscreen.dart';
 import 'package:paml_inilast/screen/auth/registerscreen.dart';
 import 'package:paml_inilast/screen/component/recordingscreen.dart';
 import 'package:paml_inilast/screen/component/sewascreen.dart';
-import 'package:paml_inilast/screen/component/studioscreen.dart';
+import 'package:paml_inilast/screen/component/studio/studioscreen.dart';
 import 'package:paml_inilast/screen/homescreen.dart';
 import 'package:paml_inilast/screen/jadwalscreen.dart';
 import 'package:paml_inilast/screen/profilescreen.dart';
