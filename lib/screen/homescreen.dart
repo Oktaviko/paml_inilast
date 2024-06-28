@@ -30,10 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 15,
-              ),
               const Text(
                 "Apa yang kamu butuhkan?",
                 style: TextStyle(
@@ -62,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.pushNamed(context, '/booking');
+                          Navigator.pushNamed(context, '/studio');
                         },
                       ),
                       Text(
@@ -126,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, '/recording');
+                      Navigator.pushNamed(context, '/record');
                     },
                   ),
                   Text(
@@ -156,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text('Jadwal'),
                 leading: Icon(Icons.schedule),
                 onTap: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamed(context, '/jadwal');
                 },
               ),
               ListTile(
