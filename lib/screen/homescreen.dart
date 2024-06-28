@@ -35,9 +35,26 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView(
             children: [
               ListTile(
+                title: Text('Profil'),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
+              ),
+              ListTile(
+                title: Text('Jadwal'),
+                leading: Icon(Icons.schedule),
+                onTap: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+              ),
+              ListTile(
                 title: Text('Logout'),
                 leading: Icon(Icons.logout),
-              )
+                onTap: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+              ),
             ],
           ),
         ),

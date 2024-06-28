@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paml_inilast/screen/auth/loginscreen.dart';
 import 'package:paml_inilast/screen/auth/registerscreen.dart';
 import 'package:paml_inilast/screen/homescreen.dart';
+import 'package:paml_inilast/screen/profilescreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: ProfileScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
+        '/profile': (context) => const ProfileScreen()
       },
     );
   }

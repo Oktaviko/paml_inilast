@@ -65,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: TextFormField(
-                      //controller: _emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -73,8 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             Radius.circular(20),
                           ),
                           borderSide: BorderSide(
-                            color: Colors.black, // Warna garis tepi border
-                            width: 1.0, // Ketebalan garis tepi border
+                            color: Colors.black,
+                            width: 1.0,
                           ),
                         ),
                         hintText: "username",
@@ -97,7 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: TextFormField(
-                      //controller: _passwordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -122,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                   ),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   },
                   child: Text(

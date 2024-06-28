@@ -50,7 +50,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    //controller: _nameController,
                     decoration: InputDecoration(
                       labelText: "Nama Lengkap",
                       prefixIcon: const Icon(Icons.person),
@@ -66,7 +65,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    //controller: _emailController,
                     decoration: InputDecoration(
                       labelText: "Username",
                       prefixIcon: const Icon(Icons.tag),
@@ -82,7 +80,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    //controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: "Password",
@@ -100,7 +97,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     obscureText: true,
-                    //controller: _passwordConfirmationController,
                     decoration: InputDecoration(
                       labelText: "Konfirmasi Password",
                       prefixIcon: const Icon(Icons.password),
