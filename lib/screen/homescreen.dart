@@ -29,7 +29,118 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
         ),
         body: Center(
-          child: Text('Home Screen'),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              const Text(
+                "Apa yang kamu butuhkan?",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.black,
+                            image: DecorationImage(
+                                image: AssetImage("assets/icons/studio.png"),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/booking');
+                        },
+                      ),
+                      Text(
+                        "Booking Studio",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.black,
+                            image: DecorationImage(
+                                image: AssetImage("assets/icons/guitar.png"),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/sewa');
+                        },
+                      ),
+                      Text(
+                        "Sewa Alat Musik",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Column(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.black,
+                        image: DecorationImage(
+                            image: AssetImage("assets/icons/recording.png"),
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/recording');
+                    },
+                  ),
+                  Text(
+                    "Recording",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         drawer: Drawer(
           child: ListView(
