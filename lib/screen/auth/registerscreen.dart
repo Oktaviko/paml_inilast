@@ -29,12 +29,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
 
         if (response.containsKey('message')) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(response['message'])));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Akun berhasil terdaftar! silahkan login',
+                style: TextStyle(
+                    color: Colors.white), // Warna teks di dalam SnackBar
+              ),
+              backgroundColor: Colors.green, // Warna background SnackBar
+              behavior: SnackBarBehavior.floating, // Membuat SnackBar mengapung
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          );
           Navigator.pushNamed(context, '/login');
         } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Registration failed')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Registrasi gagal, Teliti kembali data!',
+                style: TextStyle(
+                    color: Colors.white), // Warna teks di dalam SnackBar
+              ),
+              backgroundColor: Colors.red, // Warna background SnackBar
+              behavior: SnackBarBehavior.floating, // Membuat SnackBar mengapung
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              action: SnackBarAction(
+                label: 'Retry',
+                textColor: Colors.white,
+                onPressed: () {
+                  // Lakukan sesuatu saat tombol di SnackBar ditekan
+                },
+              ),
+            ),
+          );
         }
       } catch (e) {
         ScaffoldMessenger.of(context)
