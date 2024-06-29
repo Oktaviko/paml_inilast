@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paml_inilast/services/authservice.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,6 +9,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //final AuthService _authService = AuthService();
+
+  void _logout() async {
+    //await _authService.logout();
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -161,9 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ListTile(
                 title: Text('Logout'),
                 leading: Icon(Icons.logout),
-                onTap: () {
-                  Navigator.pushNamed(context, '/login');
-                },
+                onTap: _logout,
               ),
             ],
           ),

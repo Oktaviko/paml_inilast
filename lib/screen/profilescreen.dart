@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -9,6 +10,30 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _showEditForm = false;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _nameController.text = prefs.getString('name') ?? '';
+      _emailController.text = prefs.getString('email') ?? '';
+    });
+  }
+
+  void _saveUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', _nameController.text);
+    await prefs.setString('email', _emailController.text);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Data berhasil disimpan')));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,9 +67,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 10,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Hallo Oktaviko Rizki P !",
+                        Text(
+                          "Hallo ${_nameController.text} !",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -116,6 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             TextFormField(
+                              controller: _nameController,
                               decoration: InputDecoration(
                                 labelText: "Nama Lengkap",
                                 prefixIcon: const Icon(Icons.person),
@@ -126,40 +153,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             const SizedBox(height: 10.0),
                             TextFormField(
+                              controller: _emailController,
                               decoration: InputDecoration(
-                                labelText: "NIK KTP",
-                                prefixIcon:
-                                    const Icon(Icons.account_balance_wallet),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10.0),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Alamat",
+                                labelText: "Email",
                                 prefixIcon: const Icon(Icons.email),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10.0),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "No HP",
-                                prefixIcon: const Icon(Icons.phone),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              obscureText:
-                                  true, // Sembunyikan karakter password
-                            ),
                             const SizedBox(height: 16.0),
                             ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: _saveUserData,
                               icon: const Icon(
                                 Icons.save,
                                 color: Colors.black,
