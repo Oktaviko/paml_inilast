@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paml_inilast/screen/admin/adminhome.dart';
 import 'package:paml_inilast/screen/auth/loginadmin.dart';
 import 'package:paml_inilast/screen/auth/loginscreen.dart';
 import 'package:paml_inilast/screen/auth/registerscreen.dart';
@@ -26,12 +27,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: LoginAdmin(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/adminlog': (context) => const LoginAdmin(),
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
+        '/adminhome': (context) => const AdminHomeScreen(),
         '/pesanan': (context) => const PesananScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/studio': (context) => const StudioScreen(),
