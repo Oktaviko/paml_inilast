@@ -103,4 +103,26 @@ class StudioService {
       return false;
     }
   }
+
+  // Metode untuk memperbarui status studio
+  Future<bool> updateStatus(String id, String status) async {
+    try {
+      final url = Uri.parse('$baseUrl/studio/$id/status');
+      final response = await http.put(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'status': status}),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Failed to update status: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error in updateStatus: $e');
+      return false;
+    }
+  }
 }

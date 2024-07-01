@@ -8,6 +8,7 @@ import 'package:paml_inilast/screen/component/sewaalat/sewascreen.dart';
 import 'package:paml_inilast/screen/component/studio/studioscreen.dart';
 import 'package:paml_inilast/screen/homescreen.dart';
 import 'package:paml_inilast/screen/jadwalscreen.dart';
+import 'package:paml_inilast/screen/pesananscreen.dart';
 import 'package:paml_inilast/screen/profilescreen.dart';
 
 void main() {
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         '/studio': (context) => const StudioScreen(),
         '/sewa': (context) => const SewaScreen(),
         '/record': (context) => const RecordingScreen(),
-        '/jadwal': (context) => const JadwalScreen()
+        '/jadwal': (context) => const JadwalScreen(),
+        '/pesanan': (context) => const PesananScreen(),
       },
     );
   }
