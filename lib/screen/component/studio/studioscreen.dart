@@ -282,7 +282,7 @@ class _StudioScreenState extends State<StudioScreen> {
                   ),
                   const Text("Total harga akan ditampilkan dibawah ini "),
                   Text(
-                    totalPrice > 0 ? " $totalPrice" : "",
+                    totalPrice > 0 ? " Rp $totalPrice" : "",
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),

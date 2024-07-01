@@ -365,7 +365,7 @@ class _SewaScreenState extends State<SewaScreen> {
                             const Text(
                                 "Total harga akan ditampilkan dibawah ini "),
                             Text(
-                              totalPrice != null ? "$totalPrice" : "",
+                              totalPrice != null ? "Rp $totalPrice" : "",
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),

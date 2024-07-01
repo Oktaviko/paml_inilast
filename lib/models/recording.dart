@@ -56,7 +56,7 @@ class Recording {
 
   factory Recording.fromMap(Map<String, dynamic> map) {
     return Recording(
-      id: map['id'],
+      id: map['id'].toString(),
       nama_band: map['nama_band'] ?? '',
       jam_sewa: map['jam_sewa'] ?? '',
       hari: map['hari'] ?? '',
