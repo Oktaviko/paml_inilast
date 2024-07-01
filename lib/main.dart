@@ -8,7 +8,6 @@ import 'package:paml_inilast/screen/component/sewaalat/sewascreen.dart';
 import 'package:paml_inilast/screen/component/studio/studioscreen.dart';
 import 'package:paml_inilast/screen/homescreen.dart';
 import 'package:paml_inilast/screen/jadwalscreen.dart';
-import 'package:paml_inilast/screen/pesananscreen.dart';
 import 'package:paml_inilast/screen/profilescreen.dart';
 
 void main() {
@@ -27,14 +26,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginAdmin(),
+      home: LoginScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/adminlog': (context) => const LoginAdmin(),
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
         '/adminhome': (context) => const AdminHomeScreen(),
-        '/pesanan': (context) => const PesananScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/studio': (context) => const StudioScreen(),
         '/sewa': (context) => const SewaScreen(),

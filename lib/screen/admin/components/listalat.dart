@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:paml_inilast/services/studioservice.dart';
-import 'package:paml_inilast/models/studio.dart';
-import 'editpesanan.dart';
+import 'package:paml_inilast/models/alatmusik.dart';
+import 'package:paml_inilast/screen/admin/update/editsewa.dart';
+import 'package:paml_inilast/services/alatservice.dart';
 
-class PesananScreen extends StatefulWidget {
-  const PesananScreen({super.key});
+class ListAlat extends StatefulWidget {
+  const ListAlat({super.key});
 
   @override
-  State<PesananScreen> createState() => _PesananScreenState();
+  State<ListAlat> createState() => _ListAlatState();
 }
 
-class _PesananScreenState extends State<PesananScreen> {
-  final StudioService _studioService = StudioService();
-  late Future<List<Studio>> _futureStudios;
+class _ListAlatState extends State<ListAlat> {
+  final Alatservice _alatService = Alatservice();
+  late Future<List<Alatmusik>> _futureAlats;
 
   @override
   void initState() {
     super.initState();
-    _futureStudios = _studioService.getStudios();
+    _futureAlats = _alatService.getAlats();
   }
 
-  void _editData(Studio pesanan) {
+  void _editData(Alatmusik alat) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditPesananScreen(studio: pesanan),
+        builder: (context) => EditSewa(alat: alat),
       ),
     );
   }
 
-  void _deleteData(String id) async {
-    final bool success = await _studioService.deleteStudio(id);
+  void _deleteData(int id) async {
+    final bool success = await _alatService.deleteAlat(id.toString());
     if (success) {
       setState(() {
-        _futureStudios = _studioService.getStudios();
+        _futureAlats = _alatService.getAlats();
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -68,21 +68,20 @@ class _PesananScreenState extends State<PesananScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pesanan'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Daftar Pesanan',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Center(
+              child: const Text(
+                'Sewa Alat Musik',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
             ),
             Expanded(
-              child: FutureBuilder<List<Studio>>(
-                future: _futureStudios,
+              child: FutureBuilder<List<Alatmusik>>(
+                future: _futureAlats,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -91,26 +90,26 @@ class _PesananScreenState extends State<PesananScreen> {
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Center(child: Text('No data available'));
                   } else {
-                    final pesananList = snapshot.data!;
+                    final alatList = snapshot.data!;
                     return ListView.builder(
-                      itemCount: pesananList.length,
+                      itemCount: alatList.length,
                       itemBuilder: (context, index) {
-                        final pesanan = pesananList[index];
+                        final alat = alatList[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ListTile(
                               leading: const CircleAvatar(
-                                child: Icon(Icons.person),
+                                child: Icon(Icons.music_note),
                               ),
-                              title: Text('Nama Band: ${pesanan.nama_band}'),
+                              title: Text('Nama: ${alat.nama}'),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Durasi: ${pesanan.durasi}'),
+                                  Text('Instrumen: ${alat.instrumen}'),
                                   const SizedBox(height: 4),
-                                  Text('Jam Sewa: ${pesanan.jam_sewa}'),
+                                  Text('Durasi: ${alat.durasi}'),
                                 ],
                               ),
                               trailing: Row(
@@ -118,13 +117,13 @@ class _PesananScreenState extends State<PesananScreen> {
                                 children: [
                                   IconButton(
                                     icon: const Icon(Icons.edit),
-                                    onPressed: () => _editData(pesanan),
+                                    onPressed: () => _editData(alat),
                                   ),
                                   IconButton(
                                     icon: const Icon(Icons.delete),
-                                    onPressed: pesanan.id != null
-                                        ? () => _deleteData(pesanan.id!)
-                                        : null, // Periksa null dan gunakan id
+                                    onPressed: alat.id != null
+                                        ? () => _deleteData(alat.id!)
+                                        : null,
                                   ),
                                 ],
                               ),

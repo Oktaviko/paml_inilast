@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:paml_inilast/models/studio.dart';
 import 'package:paml_inilast/services/studioservice.dart';
 
-class EditPesananScreen extends StatefulWidget {
+class EditStudio extends StatefulWidget {
   final Studio studio;
-
-  const EditPesananScreen({super.key, required this.studio});
+  const EditStudio({super.key, required this.studio});
 
   @override
-  _EditPesananScreenState createState() => _EditPesananScreenState();
+  State<EditStudio> createState() => _EditStudioState();
 }
 
-class _EditPesananScreenState extends State<EditPesananScreen> {
-  late TextEditingController namaBandController;
+class _EditStudioState extends State<EditStudio> {
+ late TextEditingController namaBandController;
   late TextEditingController jamSewaController;
   late TextEditingController hariController;
   late TextEditingController durasiController;

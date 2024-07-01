@@ -167,13 +167,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
-                title: Text('Pesanan'),
-                leading: Icon(Icons.book_online_outlined),
-                onTap: () {
-                  Navigator.pushNamed(context, '/pesanan');
-                },
-              ),
-              ListTile(
                 title: Text('Logout'),
                 leading: Icon(Icons.logout),
                 onTap: _logout,

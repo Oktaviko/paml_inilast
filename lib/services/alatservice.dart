@@ -76,7 +76,7 @@ class Alatservice {
       final response = await http.put(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: alatmusik.toJson(),
+        body: jsonEncode(alatmusik.toMap()),
       );
 
       return response.statusCode == 200;
