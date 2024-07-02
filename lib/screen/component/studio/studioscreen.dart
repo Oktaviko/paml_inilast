@@ -113,6 +113,10 @@ class _StudioScreenState extends State<StudioScreen> {
                     "Masukkan data dengan benar",
                     style: TextStyle(fontSize: 15),
                   ),
+                  const Text(
+                    "Harap isi dengan teliti, karena pesanan tidak bisa diedit & dihapus",
+                    style: TextStyle(fontSize: 13),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),

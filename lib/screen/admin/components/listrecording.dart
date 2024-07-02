@@ -110,6 +110,8 @@ class _ListRecordingState extends State<ListRecording> {
                                   Text('Durasi: ${pesanan.durasi}'),
                                   const SizedBox(height: 4),
                                   Text('Jam Sewa: ${pesanan.jam_sewa}'),
+                                  const SizedBox(height: 4),
+                                  Text('Hari: ${pesanan.hari}'),
                                 ],
                               ),
                               trailing: Row(

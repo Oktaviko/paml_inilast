@@ -23,15 +23,16 @@ class _PesananScreenState extends State<PesananScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daftar Pesanan'),
+        centerTitle: true,
+        title: Text("Pesanan Anda"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(
-              child: Text(
+            Center(
+              child: const Text(
                 'Studio Musik',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
@@ -48,7 +49,7 @@ class _PesananScreenState extends State<PesananScreen> {
                     return const Center(child: Text('No data available'));
                   } else {
                     final pesananList = snapshot.data!
-                        .where((studio) => studio.status == 'Diterima')
+                        .where((pesanan) => pesanan.status != 'Pending')
                         .toList();
                     return ListView.builder(
                       itemCount: pesananList.length,
@@ -57,6 +58,10 @@ class _PesananScreenState extends State<PesananScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
+                            color: pesanan.status ==
+                                    'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang'
+                                ? Colors.redAccent
+                                : Colors.white,
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ListTile(
                               leading: const CircleAvatar(
@@ -69,6 +74,18 @@ class _PesananScreenState extends State<PesananScreen> {
                                   Text('Durasi: ${pesanan.durasi}'),
                                   const SizedBox(height: 4),
                                   Text('Jam Sewa: ${pesanan.jam_sewa}'),
+                                  const SizedBox(height: 4),
+                                  Text('Hari: ${pesanan.hari}'),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Status: ${pesanan.status ?? 'Pending'}',
+                                    style: TextStyle(
+                                      color: pesanan.status ==
+                                              'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang'
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

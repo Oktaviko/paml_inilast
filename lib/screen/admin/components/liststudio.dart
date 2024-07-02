@@ -66,41 +66,40 @@ class _ListStudioState extends State<ListStudio> {
   }
 
   void _updateStatus(String id, String status) async {
-  final bool success = await _studioService.updateStatus(id, status);
-  if (success) {
-    setState(() {
-      _futureStudios = _studioService.getStudios();
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Status berhasil diperbarui',
-          style: TextStyle(color: Colors.white),
+    final bool success = await _studioService.updateStatus(id, status);
+    if (success) {
+      setState(() {
+        _futureStudios = _studioService.getStudios();
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Status berhasil diperbarui',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
-        backgroundColor: Colors.green,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Gagal memperbarui status',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
-      ),
-    );
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Gagal memperbarui status',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+      );
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,10 +136,10 @@ class _ListStudioState extends State<ListStudio> {
                           child: Card(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ListTile(
-                              leading: const CircleAvatar(
-                                child: Icon(Icons.person),
+                              title: Text(
+                                'Nama Band: ${pesanan.nama_band}',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              title: Text('Nama Band: ${pesanan.nama_band}'),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -148,7 +147,11 @@ class _ListStudioState extends State<ListStudio> {
                                   const SizedBox(height: 4),
                                   Text('Jam Sewa: ${pesanan.jam_sewa}'),
                                   const SizedBox(height: 4),
-                                  Text('Status: ${pesanan.status ?? 'Pending'}'),
+                                  Text('Hari: ${pesanan.hari}'),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Status: ${pesanan.status ?? 'Pending'}',
+                                  ),
                                 ],
                               ),
                               trailing: Row(
@@ -167,7 +170,15 @@ class _ListStudioState extends State<ListStudio> {
                                   IconButton(
                                     icon: const Icon(Icons.check_circle),
                                     onPressed: pesanan.id != null
-                                        ? () => _updateStatus(pesanan.id!, 'Diterima')
+                                        ? () => _updateStatus(
+                                            pesanan.id!, 'Diterima')
+                                        : null, // Periksa null dan gunakan id
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    onPressed: pesanan.id != null
+                                        ? () => _updateStatus(pesanan.id!,
+                                            'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
                                         : null, // Periksa null dan gunakan id
                                   ),
                                 ],

@@ -104,7 +104,6 @@ class StudioService {
     }
   }
 
-  // Metode untuk memperbarui status studio
   Future<bool> updateStatus(String id, String status) async {
     try {
       final url = Uri.parse('$baseUrl/studio/$id/status');
