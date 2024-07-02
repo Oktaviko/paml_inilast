@@ -33,7 +33,8 @@ class _EditSewaState extends State<EditSewa> {
     _opsiController = TextEditingController(text: widget.alat.opsi);
     _alamatController = TextEditingController(text: widget.alat.alamat);
     _pembayaranController = TextEditingController(text: widget.alat.pembayaran);
-    _totalHargaController = TextEditingController(text: widget.alat.total_harga);
+    _totalHargaController =
+        TextEditingController(text: widget.alat.total_harga);
   }
 
   void _updateData() async {
@@ -48,9 +49,11 @@ class _EditSewaState extends State<EditSewa> {
         alamat: _alamatController.text,
         pembayaran: _pembayaranController.text,
         total_harga: _totalHargaController.text,
+        hari: '',
       );
 
-      bool success = await _alatService.updateAlat(updatedAlat, updatedAlat.id.toString());
+      bool success =
+          await _alatService.updateAlat(updatedAlat, updatedAlat.id.toString());
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

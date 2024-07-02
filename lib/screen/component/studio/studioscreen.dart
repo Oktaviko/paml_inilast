@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/controller/price.dart';
-import 'package:paml_inilast/screen/component/studio/detailstudio.dart';
 import 'package:paml_inilast/models/studio.dart';
 import 'package:paml_inilast/services/studioservice.dart';
 
@@ -64,13 +63,19 @@ class _StudioScreenState extends State<StudioScreen> {
 
     Studio? newStudio = await _studioService.createStudio(studio);
     if (newStudio != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const DetailStudio()),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Pesanan terkirim, tunggu Admin merespon'),
+          backgroundColor: Colors.green,
+        ),
       );
+      Navigator.pushNamed(context, '/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Gagal membuat booking studio')),
+        SnackBar(
+          content: Text('Gagal membuat pesanan'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
   }

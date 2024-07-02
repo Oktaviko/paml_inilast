@@ -80,21 +80,41 @@ class RecordingService {
   }
 
   Future<bool> deleteRecording(String id) async {
-  try {
-    final url = Uri.parse('$baseUrl/recordings/$id');
-    final response = await http.delete(url);
+    try {
+      final url = Uri.parse('$baseUrl/recordings/$id');
+      final response = await http.delete(url);
 
-    if (response.statusCode == 204) {
-      print('Data berhasil dihapus');
-      return true;
-    } else {
-      print('Gagal menghapus data: ${response.body}');
+      if (response.statusCode == 204) {
+        print('Data berhasil dihapus');
+        return true;
+      } else {
+        print('Gagal menghapus data: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error in deleteRecording: $e');
       return false;
     }
-  } catch (e) {
-    print('Error in deleteRecording: $e');
-    return false;
   }
-}
 
+  Future<bool> updateStatus(String id, String status) async {
+    try {
+      final url = Uri.parse('$baseUrl/recordings/$id/status');
+      final response = await http.put(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'status': status}),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Failed to update status: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error in updateStatus: $e');
+      return false;
+    }
+  }
 }

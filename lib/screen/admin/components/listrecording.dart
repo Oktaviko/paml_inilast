@@ -65,6 +65,43 @@ class _ListRecordingState extends State<ListRecording> {
     }
   }
 
+  void _updateStatus(String id, String status) async {
+    print('Updating status for $id to $status'); // Debugging
+    final bool success = await _recordingService.updateStatus(id, status);
+    if (success) {
+      setState(() {
+        _futureRecordings = _recordingService.getRecordings();
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Status berhasil diperbarui',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Gagal memperbarui status',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +112,7 @@ class _ListRecordingState extends State<ListRecording> {
           children: [
             Center(
               child: const Text(
-                'Recording Studio',
+                'Recording Musik',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -100,10 +137,10 @@ class _ListRecordingState extends State<ListRecording> {
                           child: Card(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ListTile(
-                              leading: const CircleAvatar(
-                                child: Icon(Icons.person),
+                              title: Text(
+                                'Nama Band: ${pesanan.nama_band}',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              title: Text('Nama Band: ${pesanan.nama_band}'),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -112,6 +149,10 @@ class _ListRecordingState extends State<ListRecording> {
                                   Text('Jam Sewa: ${pesanan.jam_sewa}'),
                                   const SizedBox(height: 4),
                                   Text('Hari: ${pesanan.hari}'),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Status: ${pesanan.status ?? 'Pending'}',
+                                  ),
                                 ],
                               ),
                               trailing: Row(
@@ -125,6 +166,20 @@ class _ListRecordingState extends State<ListRecording> {
                                     icon: const Icon(Icons.delete),
                                     onPressed: pesanan.id != null
                                         ? () => _deleteData(pesanan.id!)
+                                        : null, // Periksa null dan gunakan id
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.check_circle),
+                                    onPressed: pesanan.id != null
+                                        ? () => _updateStatus(
+                                            pesanan.id!, 'Diterima')
+                                        : null, // Periksa null dan gunakan id
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    onPressed: pesanan.id != null
+                                        ? () => _updateStatus(pesanan.id!,
+                                            'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
                                         : null, // Periksa null dan gunakan id
                                   ),
                                 ],

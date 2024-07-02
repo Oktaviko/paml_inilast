@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/controller/price.dart';
 import 'package:paml_inilast/models/recording.dart';
-import 'package:paml_inilast/screen/component/recording/detailsrecord.dart';
 import 'package:paml_inilast/services/recordingservice.dart';
 
 class RecordingScreen extends StatefulWidget {
@@ -66,18 +65,15 @@ class _RecordingScreenState extends State<RecordingScreen> {
     if (newRecording != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Data berhasil disimpan'),
+          content: Text('Pesanan terkirim, tunggu Admin merespon'),
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const DetailRecord()),
-      );
+      Navigator.pushNamed(context, '/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Gagal menyimpan data'),
+          content: Text('Gagal membuat pesanan'),
           backgroundColor: Colors.red,
         ),
       );

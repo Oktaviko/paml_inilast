@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/controller/price.dart';
 import 'package:paml_inilast/models/alatmusik.dart';
-import 'package:paml_inilast/screen/component/sewaalat/detailsewa.dart';
 import 'package:paml_inilast/services/alatservice.dart';
 import 'package:paml_inilast/widgets/mapscreen.dart';
 
@@ -14,9 +13,10 @@ class SewaScreen extends StatefulWidget {
 
 class _SewaScreenState extends State<SewaScreen> {
   String? selectedValueAlat;
-  String? selectedValueHari;
+  String? selectedValueDurasi;
   String? selectedValueBayar;
   String? selectedValueAntar = 'Ambil ditempat';
+  String? selectedValueHari;
   String? _alamat;
   int? totalPrice;
 
@@ -27,7 +27,7 @@ class _SewaScreenState extends State<SewaScreen> {
 
   void calculateTotalPrice() {
     setState(() {
-      totalPrice = SewaPrices.getPrice(selectedValueAlat, selectedValueHari);
+      totalPrice = SewaPrices.getPrice(selectedValueAlat, selectedValueDurasi);
     });
   }
 
@@ -41,11 +41,12 @@ class _SewaScreenState extends State<SewaScreen> {
         nama: namaController.text,
         no_hp: noHpController.text,
         instrumen: selectedValueAlat ?? '',
-        durasi: selectedValueHari ?? '',
+        durasi: selectedValueDurasi ?? '',
         alamat: alamat,
         pembayaran: selectedValueBayar ?? '',
         total_harga: totalPrice?.toString() ?? '0', // Konversi ke string
         opsi: selectedValueAntar ?? '', // Tambahkan ini
+        hari: selectedValueHari ?? '', // Tambahkan ini
       );
 
       print('Alatmusik to be created: ${alatmusik.toJson()}');
@@ -54,18 +55,15 @@ class _SewaScreenState extends State<SewaScreen> {
       if (newAlatmusik != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Data berhasil disimpan'),
+            content: Text('Pesanan terkirim, tunggu Admin merespon'),
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const DetailSewa()),
-        );
+        Navigator.pushNamed(context, '/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Gagal menyimpan data'),
+            content: Text('Gagal membuat pesanan'),
             backgroundColor: Colors.red,
           ),
         );
@@ -212,7 +210,7 @@ class _SewaScreenState extends State<SewaScreen> {
                                   Border.all(color: Colors.black, width: 2.0),
                             ),
                             child: DropdownButton<String?>(
-                              value: selectedValueHari,
+                              value: selectedValueDurasi,
                               isExpanded: true,
                               underline: const SizedBox(),
                               items: ["1 Hari", "2 Hari", "3 Hari"]
@@ -225,8 +223,46 @@ class _SewaScreenState extends State<SewaScreen> {
                                   .toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  selectedValueHari = value;
+                                  selectedValueDurasi = value;
                                   calculateTotalPrice();
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        const Text("Pilih Hari"),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(15),
+                              border:
+                                  Border.all(color: Colors.black, width: 2.0),
+                            ),
+                            child: DropdownButton<String?>(
+                              value: selectedValueHari,
+                              isExpanded: true,
+                              underline: const SizedBox(),
+                              items: [
+                                "Senin",
+                                "Selasa",
+                                "Rabu",
+                                "Kamis",
+                                "Jumat",
+                                "Sabtu",
+                                "Minggu"
+                              ]
+                                  .map<DropdownMenuItem<String?>>(
+                                    (e) => DropdownMenuItem(
+                                      child: Text(e.toString()),
+                                      value: e,
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedValueHari = value;
                                 });
                               },
                             ),

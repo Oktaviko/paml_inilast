@@ -8,6 +8,7 @@ class Recording {
   final String durasi;
   final String pembayaran;
   final String total_harga;
+  final String? status;
   Recording({
     this.id,
     required this.nama_band,
@@ -16,6 +17,7 @@ class Recording {
     required this.durasi,
     required this.pembayaran,
     required this.total_harga,
+    this.status,
   });
 
   Recording copyWith({
@@ -26,6 +28,7 @@ class Recording {
     String? durasi,
     String? pembayaran,
     String? total_harga,
+    String? status,
   }) {
     return Recording(
       id: id ?? this.id,
@@ -35,6 +38,7 @@ class Recording {
       durasi: durasi ?? this.durasi,
       pembayaran: pembayaran ?? this.pembayaran,
       total_harga: total_harga ?? this.total_harga,
+      status: status ?? this.status,
     );
   }
 
@@ -50,6 +54,9 @@ class Recording {
     result.addAll({'durasi': durasi});
     result.addAll({'pembayaran': pembayaran});
     result.addAll({'total_harga': total_harga});
+    if(status != null){
+      result.addAll({'status': status});
+    }
   
     return result;
   }
@@ -63,6 +70,7 @@ class Recording {
       durasi: map['durasi'] ?? '',
       pembayaran: map['pembayaran'] ?? '',
       total_harga: map['total_harga'] ?? '',
+      status: map['status'] ?? 'Pending',
     );
   }
 
@@ -72,7 +80,7 @@ class Recording {
 
   @override
   String toString() {
-    return 'Recording(id: $id, nama_band: $nama_band, jam_sewa: $jam_sewa, hari: $hari, durasi: $durasi, pembayaran: $pembayaran, total_harga: $total_harga)';
+    return 'Recording(id: $id, nama_band: $nama_band, jam_sewa: $jam_sewa, hari: $hari, durasi: $durasi, pembayaran: $pembayaran, total_harga: $total_harga, status: $status)';
   }
 
   @override
@@ -86,7 +94,8 @@ class Recording {
       other.hari == hari &&
       other.durasi == durasi &&
       other.pembayaran == pembayaran &&
-      other.total_harga == total_harga;
+      other.total_harga == total_harga &&
+      other.status == status;
   }
 
   @override
@@ -97,6 +106,7 @@ class Recording {
       hari.hashCode ^
       durasi.hashCode ^
       pembayaran.hashCode ^
-      total_harga.hashCode;
+      total_harga.hashCode ^
+      status.hashCode;
   }
 }

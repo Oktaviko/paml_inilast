@@ -29,8 +29,8 @@ class _ListAlatState extends State<ListAlat> {
     );
   }
 
-  void _deleteData(int id) async {
-    final bool success = await _alatService.deleteAlat(id.toString());
+  void _deleteData(String id) async {
+    final bool success = await _alatService.deleteAlat(id);
     if (success) {
       setState(() {
         _futureAlats = _alatService.getAlats();
@@ -53,6 +53,42 @@ class _ListAlatState extends State<ListAlat> {
         SnackBar(
           content: Text(
             'Gagal menghapus data',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    }
+  }
+
+  void _updateStatus(String id, String status) async {
+    final bool success = await _alatService.updateStatus(id, status);
+    if (success) {
+      setState(() {
+        _futureAlats = _alatService.getAlats();
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Status berhasil diperbarui',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Gagal memperbarui status',
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.red,
@@ -100,9 +136,6 @@ class _ListAlatState extends State<ListAlat> {
                           child: Card(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ListTile(
-                              leading: const CircleAvatar(
-                                child: Icon(Icons.music_note),
-                              ),
                               title: Text('Nama: ${alat.nama}'),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,6 +143,10 @@ class _ListAlatState extends State<ListAlat> {
                                   Text('Instrumen: ${alat.instrumen}'),
                                   const SizedBox(height: 4),
                                   Text('Durasi: ${alat.durasi}'),
+                                  const SizedBox(height: 4),
+                                  Text('Hari: ${alat.hari}'),
+                                  const SizedBox(height: 4),
+                                  Text('Status: ${alat.status ?? 'Pending'}'),
                                 ],
                               ),
                               trailing: Row(
@@ -123,6 +160,20 @@ class _ListAlatState extends State<ListAlat> {
                                     icon: const Icon(Icons.delete),
                                     onPressed: alat.id != null
                                         ? () => _deleteData(alat.id!)
+                                        : null,
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.check_circle),
+                                    onPressed: alat.id != null
+                                        ? () =>
+                                            _updateStatus(alat.id!, 'Diterima')
+                                        : null,
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    onPressed: alat.id != null
+                                        ? () => _updateStatus(alat.id!,
+                                            'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
                                         : null,
                                   ),
                                 ],
