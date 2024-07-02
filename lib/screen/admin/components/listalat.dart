@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/models/alatmusik.dart';
+import 'package:paml_inilast/screen/admin/components/nota/alatnota.dart';
 import 'package:paml_inilast/screen/admin/update/editsewa.dart';
 import 'package:paml_inilast/services/alatservice.dart';
 
@@ -101,6 +102,15 @@ class _ListAlatState extends State<ListAlat> {
     }
   }
 
+  void _cetakNota(Alatmusik alat) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AlatNota(alat: alat),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,6 +157,21 @@ class _ListAlatState extends State<ListAlat> {
                                   Text('Hari: ${alat.hari}'),
                                   const SizedBox(height: 4),
                                   Text('Status: ${alat.status ?? 'Pending'}'),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.download),
+                                        onPressed: () => _cetakNota(alat),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.check_circle),
+                                        onPressed: alat.id != null
+                                            ? () => _updateStatus(
+                                                alat.id!, 'Diterima')
+                                            : null,
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                               trailing: Row(
@@ -160,13 +185,6 @@ class _ListAlatState extends State<ListAlat> {
                                     icon: const Icon(Icons.delete),
                                     onPressed: alat.id != null
                                         ? () => _deleteData(alat.id!)
-                                        : null,
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.check_circle),
-                                    onPressed: alat.id != null
-                                        ? () =>
-                                            _updateStatus(alat.id!, 'Diterima')
                                         : null,
                                   ),
                                   IconButton(

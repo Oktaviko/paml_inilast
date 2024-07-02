@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/models/recording.dart';
+import 'package:paml_inilast/screen/admin/components/nota/recordingnota.dart';
 import 'package:paml_inilast/screen/admin/update/editrecording.dart';
 import 'package:paml_inilast/services/recordingservice.dart';
 
@@ -102,6 +103,15 @@ class _ListRecordingState extends State<ListRecording> {
     }
   }
 
+  void _cetakNota(Recording recording) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecordNota(recording: recording),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,6 +163,21 @@ class _ListRecordingState extends State<ListRecording> {
                                   Text(
                                     'Status: ${pesanan.status ?? 'Pending'}',
                                   ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.download),
+                                        onPressed: () => _cetakNota(pesanan),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.check_circle),
+                                        onPressed: pesanan.id != null
+                                            ? () => _updateStatus(
+                                                pesanan.id!, 'Diterima')
+                                            : null, // Periksa null dan gunakan id
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                               trailing: Row(
@@ -166,13 +191,6 @@ class _ListRecordingState extends State<ListRecording> {
                                     icon: const Icon(Icons.delete),
                                     onPressed: pesanan.id != null
                                         ? () => _deleteData(pesanan.id!)
-                                        : null, // Periksa null dan gunakan id
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.check_circle),
-                                    onPressed: pesanan.id != null
-                                        ? () => _updateStatus(
-                                            pesanan.id!, 'Diterima')
                                         : null, // Periksa null dan gunakan id
                                   ),
                                   IconButton(

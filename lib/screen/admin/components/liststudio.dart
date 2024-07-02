@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/models/studio.dart';
+import 'package:paml_inilast/screen/admin/components/nota/studionota.dart';
 import 'package:paml_inilast/screen/admin/update/editstudio.dart';
 import 'package:paml_inilast/services/studioservice.dart';
 
@@ -101,6 +102,15 @@ class _ListStudioState extends State<ListStudio> {
     }
   }
 
+  void _cetakNota(Studio studio) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudioNota(studio: studio),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,6 +162,21 @@ class _ListStudioState extends State<ListStudio> {
                                   Text(
                                     'Status: ${pesanan.status ?? 'Pending'}',
                                   ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.download),
+                                        onPressed: () => _cetakNota(pesanan),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.check_circle),
+                                        onPressed: pesanan.id != null
+                                            ? () => _updateStatus(
+                                                pesanan.id!, 'Diterima')
+                                            : null, // Periksa null dan gunakan id
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                               trailing: Row(
@@ -165,13 +190,6 @@ class _ListStudioState extends State<ListStudio> {
                                     icon: const Icon(Icons.delete),
                                     onPressed: pesanan.id != null
                                         ? () => _deleteData(pesanan.id!)
-                                        : null, // Periksa null dan gunakan id
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.check_circle),
-                                    onPressed: pesanan.id != null
-                                        ? () => _updateStatus(
-                                            pesanan.id!, 'Diterima')
                                         : null, // Periksa null dan gunakan id
                                   ),
                                   IconButton(
