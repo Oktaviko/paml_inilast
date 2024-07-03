@@ -2,18 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:paml_inilast/models/instrumen.dart';
 import 'package:paml_inilast/services/instrumenservice.dart';
 
-class InstrumenScreen extends StatefulWidget {
-  const InstrumenScreen({super.key});
+class EditInstrumen extends StatefulWidget {
+  final Instrumen instrumen;
+
+  const EditInstrumen({required this.instrumen, super.key});
 
   @override
-  State<InstrumenScreen> createState() => _InstrumenScreenState();
+  State<EditInstrumen> createState() => _EditInstrumenState();
 }
 
-class _InstrumenScreenState extends State<InstrumenScreen> {
+class _EditInstrumenState extends State<EditInstrumen> {
   final _formKey = GlobalKey<FormState>();
-  final _namaInstrumenController = TextEditingController();
-  final _jenisInstrumenController = TextEditingController();
+  late TextEditingController _namaInstrumenController;
+  late TextEditingController _jenisInstrumenController;
   final InstrumenService _instrumenService = InstrumenService();
+
+  @override
+  void initState() {
+    super.initState();
+    _namaInstrumenController =
+        TextEditingController(text: widget.instrumen.nama_instrumen);
+    _jenisInstrumenController =
+        TextEditingController(text: widget.instrumen.jenis);
+  }
 
   @override
   void dispose() {
@@ -22,26 +33,31 @@ class _InstrumenScreenState extends State<InstrumenScreen> {
     super.dispose();
   }
 
-  Future<void> _submitForm() async {
+  Future<void> _updateInstrumen() async {
     if (_formKey.currentState!.validate()) {
-      Instrumen instrumen = Instrumen(
+      Instrumen updatedInstrumen = Instrumen(
+        id: widget.instrumen.id,
         nama_instrumen: _namaInstrumenController.text,
         jenis: _jenisInstrumenController.text,
       );
 
-      Instrumen? newInstrumen = await _instrumenService.createInstrumen(instrumen);
-      if (newInstrumen != null) {
+      bool success = await _instrumenService.updateInstrumen(
+        updatedInstrumen,
+        updatedInstrumen.id!,
+      );
+
+      if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Data instrumen berhasil ditambahkan'),
+            content: Text('Data instrumen berhasil diperbarui'),
             backgroundColor: Colors.green,
           ),
         );
-        _formKey.currentState!.reset();
+        Navigator.pop(context, updatedInstrumen);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Gagal menambahkan instrumen'),
+            content: Text('Gagal memperbarui instrumen'),
             backgroundColor: Colors.red,
           ),
         );
@@ -66,7 +82,7 @@ class _InstrumenScreenState extends State<InstrumenScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Text('Tambah Instrumen'),
+          title: const Text('Edit Instrumen'),
           centerTitle: true,
         ),
         body: Padding(
@@ -106,7 +122,7 @@ class _InstrumenScreenState extends State<InstrumenScreen> {
                 const SizedBox(height: 16),
                 Center(
                   child: ElevatedButton(
-                    onPressed: _submitForm,
+                    onPressed: _updateInstrumen,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 250, 250, 250),
                       padding: const EdgeInsets.symmetric(
@@ -114,7 +130,7 @@ class _InstrumenScreenState extends State<InstrumenScreen> {
                       textStyle: const TextStyle(fontSize: 16),
                     ),
                     child: const Text(
-                      'Tambah Alat',
+                      'Simpan Perubahan',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

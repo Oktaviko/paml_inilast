@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:paml_inilast/controller/price.dart';
 import 'package:paml_inilast/models/alatmusik.dart';
+import 'package:paml_inilast/models/instrumen.dart';
 import 'package:paml_inilast/services/alatservice.dart';
+import 'package:paml_inilast/services/instrumenservice.dart';
 import 'package:paml_inilast/widgets/mapscreen.dart';
 
 class SewaScreen extends StatefulWidget {
@@ -19,11 +21,26 @@ class _SewaScreenState extends State<SewaScreen> {
   String? selectedValueHari;
   String? _alamat;
   int? totalPrice;
+  List<Instrumen> _instrumens = [];
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController namaController = TextEditingController();
   final TextEditingController noHpController = TextEditingController();
   final Alatservice _alatService = Alatservice();
+  final InstrumenService _instrumenService = InstrumenService();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchInstrumens();
+  }
+
+  void _fetchInstrumens() async {
+    List<Instrumen> instrumens = await _instrumenService.getInstrumens();
+    setState(() {
+      _instrumens = instrumens;
+    });
+  }
 
   void calculateTotalPrice() {
     setState(() {
@@ -179,11 +196,11 @@ class _SewaScreenState extends State<SewaScreen> {
                               value: selectedValueAlat,
                               isExpanded: true,
                               underline: const SizedBox(),
-                              items: ["Gitar", "Bass", "Keyboard", "Ampli"]
+                              items: _instrumens
                                   .map<DropdownMenuItem<String?>>(
-                                    (e) => DropdownMenuItem(
-                                      child: Text(e.toString()),
-                                      value: e,
+                                    (instrumen) => DropdownMenuItem(
+                                      child: Text(instrumen.nama_instrumen),
+                                      value: instrumen.nama_instrumen,
                                     ),
                                   )
                                   .toList(),
