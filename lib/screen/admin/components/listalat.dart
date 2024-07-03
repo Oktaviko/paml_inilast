@@ -113,99 +113,112 @@ class _ListAlatState extends State<ListAlat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: const Text(
-                'Sewa Alat Musik',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.redAccent,
+            Colors.orangeAccent,
+          ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: const Text(
+                  'Sewa Alat Musik',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Expanded(
-              child: FutureBuilder<List<Alatmusik>>(
-                future: _futureAlats,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return const Center(child: Text('Failed to load data'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No data available'));
-                  } else {
-                    final alatList = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: alatList.length,
-                      itemBuilder: (context, index) {
-                        final alat = alatList[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: ListTile(
-                              title: Text('Nama: ${alat.nama}'),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Instrumen: ${alat.instrumen}'),
-                                  const SizedBox(height: 4),
-                                  Text('Durasi: ${alat.durasi}'),
-                                  const SizedBox(height: 4),
-                                  Text('Hari: ${alat.hari}'),
-                                  const SizedBox(height: 4),
-                                  Text('Status: ${alat.status ?? 'Pending'}'),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.download),
-                                        onPressed: () => _cetakNota(alat),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.check_circle),
-                                        onPressed: alat.id != null
-                                            ? () => _updateStatus(
-                                                alat.id!, 'Diterima')
-                                            : null,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () => _editData(alat),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: alat.id != null
-                                        ? () => _deleteData(alat.id!)
-                                        : null,
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.cancel),
-                                    onPressed: alat.id != null
-                                        ? () => _updateStatus(alat.id!,
-                                            'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
-                                        : null,
-                                  ),
-                                ],
+              Expanded(
+                child: FutureBuilder<List<Alatmusik>>(
+                  future: _futureAlats,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Failed to load data'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final alatList = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: alatList.length,
+                        itemBuilder: (context, index) {
+                          final alat = alatList[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: ListTile(
+                                title: Text('Nama: ${alat.nama}'),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Instrumen: ${alat.instrumen}'),
+                                    const SizedBox(height: 4),
+                                    Text('Durasi: ${alat.durasi}'),
+                                    const SizedBox(height: 4),
+                                    Text('Hari: ${alat.hari}'),
+                                    const SizedBox(height: 4),
+                                    Text('Status: ${alat.status ?? 'Pending'}'),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.download),
+                                          onPressed: () => _cetakNota(alat),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.check_circle),
+                                          onPressed: alat.id != null
+                                              ? () => _updateStatus(
+                                                  alat.id!, 'Diterima')
+                                              : null,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () => _editData(alat),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: alat.id != null
+                                          ? () => _deleteData(alat.id!)
+                                          : null,
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.cancel),
+                                      onPressed: alat.id != null
+                                          ? () => _updateStatus(alat.id!,
+                                              'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
+                                          : null,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

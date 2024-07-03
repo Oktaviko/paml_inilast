@@ -113,104 +113,117 @@ class _ListStudioState extends State<ListStudio> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: const Text(
-                'Studio Musik',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.redAccent,
+            Colors.orangeAccent,
+          ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: const Text(
+                  'Studio Musik',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Expanded(
-              child: FutureBuilder<List<Studio>>(
-                future: _futureStudios,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return const Center(child: Text('Failed to load data'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No data available'));
-                  } else {
-                    final pesananList = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: pesananList.length,
-                      itemBuilder: (context, index) {
-                        final pesanan = pesananList[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: ListTile(
-                              title: Text(
-                                'Nama Band: ${pesanan.nama_band}',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Durasi: ${pesanan.durasi}'),
-                                  const SizedBox(height: 4),
-                                  Text('Jam Sewa: ${pesanan.jam_sewa}'),
-                                  const SizedBox(height: 4),
-                                  Text('Hari: ${pesanan.hari}'),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'Status: ${pesanan.status ?? 'Pending'}',
-                                  ),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.download),
-                                        onPressed: () => _cetakNota(pesanan),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.check_circle),
-                                        onPressed: pesanan.id != null
-                                            ? () => _updateStatus(
-                                                pesanan.id!, 'Diterima')
-                                            : null, // Periksa null dan gunakan id
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () => _editData(pesanan),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: pesanan.id != null
-                                        ? () => _deleteData(pesanan.id!)
-                                        : null, // Periksa null dan gunakan id
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.cancel),
-                                    onPressed: pesanan.id != null
-                                        ? () => _updateStatus(pesanan.id!,
-                                            'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
-                                        : null, // Periksa null dan gunakan id
-                                  ),
-                                ],
+              Expanded(
+                child: FutureBuilder<List<Studio>>(
+                  future: _futureStudios,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Failed to load data'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final pesananList = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: pesananList.length,
+                        itemBuilder: (context, index) {
+                          final pesanan = pesananList[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: ListTile(
+                                title: Text(
+                                  'Nama Band: ${pesanan.nama_band}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Durasi: ${pesanan.durasi}'),
+                                    const SizedBox(height: 4),
+                                    Text('Jam Sewa: ${pesanan.jam_sewa}'),
+                                    const SizedBox(height: 4),
+                                    Text('Hari: ${pesanan.hari}'),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Status: ${pesanan.status ?? 'Pending'}',
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.download),
+                                          onPressed: () => _cetakNota(pesanan),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.check_circle),
+                                          onPressed: pesanan.id != null
+                                              ? () => _updateStatus(
+                                                  pesanan.id!, 'Diterima')
+                                              : null, // Periksa null dan gunakan id
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () => _editData(pesanan),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: pesanan.id != null
+                                          ? () => _deleteData(pesanan.id!)
+                                          : null, // Periksa null dan gunakan id
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.cancel),
+                                      onPressed: pesanan.id != null
+                                          ? () => _updateStatus(pesanan.id!,
+                                              'Tidak diterima karena jadwal telah terisi, silahkan pesan ulang')
+                                          : null, // Periksa null dan gunakan id
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
